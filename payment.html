@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bekas Desserts | Pago</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --chocolate: #5A2D1F;
+      --caramel: #D9A066;
+      --cream: #F3ECE7;
+      --mocha: #8B5A3C;
+      --white: #fffdfb;
+      --soft-shadow: rgba(90, 45, 31, 0.08);
+      --success: #6f9a67;
+
+      --satin-panel: rgba(255, 250, 246, 0.58);
+      --satin-panel-strong: rgba(255, 248, 242, 0.72);
+      --satin-border: rgba(255, 255, 255, 0.42);
+      --satin-inner: rgba(255, 255, 255, 0.24);
+      --satin-highlight: rgba(255, 255, 255, 0.35);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.55), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(217,160,102,0.14), transparent 30%),
+        linear-gradient(135deg, #f8f2ee 0%, #f3ece7 48%, #ede2da 100%);
+      color: var(--chocolate);
+      overflow-x: hidden;
+    }
+
+    body {
+      position: relative;
+    }
+
+    .bg-shape {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.22;
+      animation: floatShape 10s ease-in-out infinite;
+      filter: blur(1px);
+    }
+
+    .shape-1 {
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle at 30% 30%, #f8d7bc, var(--caramel));
+      top: 8%;
+      left: 4%;
+    }
+
+    .shape-2 {
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle at 30% 30%, #fff3eb, #d8b19a);
+      top: 70%;
+      left: 8%;
+      animation-delay: 2s;
+    }
+
+    .shape-3 {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle at 30% 30%, #e9c9b4, #b88261);
+      top: 14%;
+      right: 3%;
+      animation-delay: 1.5s;
+    }
+
+    .shape-4 {
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle at 30% 30%, #f7e4d3, #c78b65);
+      bottom: 8%;
+      right: 7%;
+      animation-delay: 3s;
+    }
+
+    .sparkle {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: var(--caramel);
+      transform: rotate(45deg);
+      opacity: 0.18;
+      z-index: 0;
+      animation: sparkleDrift 12s linear infinite;
+      pointer-events: none;
+    }
+
+    .sparkle.s1 { top: 20%; left: 22%; animation-delay: 0s; }
+    .sparkle.s2 { top: 60%; left: 70%; animation-delay: 2s; }
+    .sparkle.s3 { top: 40%; left: 85%; animation-delay: 4s; }
+    .sparkle.s4 { top: 75%; left: 35%; animation-delay: 1s; }
+    .sparkle.s5 { top: 10%; left: 60%; animation-delay: 5s; }
+
+    @keyframes floatShape {
+      0%, 100% { transform: translateY(0px) translateX(0px) scale(1); }
+      50% { transform: translateY(-20px) translateX(10px) scale(1.04); }
+    }
+
+    @keyframes sparkleDrift {
+      0% { transform: translateY(0) rotate(45deg) scale(1); opacity: 0.12; }
+      50% { opacity: 0.3; }
+      100% { transform: translateY(-25px) rotate(90deg) scale(1.2); opacity: 0.08; }
+    }
+
+    .payment-section {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 20px;
+    }
+
+    .payment-wrapper {
+      width: 100%;
+      max-width: 1180px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .payment-info,
+    .payment-card {
+      background:
+        linear-gradient(180deg, var(--satin-highlight), rgba(255,255,255,0.08)),
+        var(--satin-panel);
+      backdrop-filter: blur(18px) saturate(135%);
+      -webkit-backdrop-filter: blur(18px) saturate(135%);
+      border: 1px solid var(--satin-border);
+      border-radius: 30px;
+      box-shadow:
+        0 22px 48px rgba(90, 45, 31, 0.10),
+        inset 0 1px 0 rgba(255,255,255,0.34),
+        inset 0 -1px 0 rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .payment-info::before,
+    .payment-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.18), transparent 42%),
+        radial-gradient(circle at top left, rgba(255,255,255,0.22), transparent 34%);
+      pointer-events: none;
+    }
+
+    .payment-info {
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .logo-placeholder {
+      width: 120px;
+      height: 120px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      background: transparent;
+    }
+
+    .logo-img-payment {
+      max-width: 100%;
+      max-height: 110px;
+      object-fit: contain;
+    }
+
+    .eyebrow {
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--caramel);
+      font-size: 0.8rem;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .payment-info h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.3rem;
+      line-height: 0.95;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .payment-info p {
+      font-size: 1rem;
+      color: var(--mocha);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mini-benefits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mini-benefit {
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(217, 160, 102, 0.12);
+      border: 1px solid rgba(217, 160, 102, 0.2);
+      font-size: 0.92rem;
+    }
+
+    .payment-card {
+      padding: 34px;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-top h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+    }
+
+    .secure-badge {
+      font-size: 0.82rem;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(111, 154, 103, 0.12);
+      color: var(--success);
+      border: 1px solid rgba(111, 154, 103, 0.22);
+      font-weight: 600;
+    }
+
+    .checkout-box {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.32), rgba(255,248,243,0.18)),
+        var(--satin-panel-strong);
+      border: 1px solid rgba(255,255,255,0.34);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 22px;
+      position: relative;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.28),
+        0 10px 24px rgba(90,45,31,0.05);
+      z-index: 2;
+    }
+
+    .order-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+      color: var(--mocha);
+      font-size: 0.95rem;
+    }
+
+    .order-row.total {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(90, 45, 31, 0.1);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--chocolate);
+    }
+
+    .checkout-detail strong {
+      color: var(--chocolate);
+    }
+
+    .checkout-detail small {
+      display: block;
+      margin-top: 4px;
+      color: var(--mocha);
+      line-height: 1.6;
+    }
+
+    .empty-order {
+      color: var(--mocha);
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    form {
+      position: relative;
+      z-index: 2;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.42);
+      background: rgba(255, 252, 249, 0.56);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-size: 0.98rem;
+      color: var(--chocolate);
+      transition: all 0.25s ease;
+      outline: none;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.35),
+        0 6px 14px rgba(90,45,31,0.04);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(139, 90, 60, 0.55);
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(217,160,102,0.48);
+      box-shadow:
+        0 0 0 4px rgba(217, 160, 102, 0.10),
+        inset 0 1px 0 rgba(255,255,255,0.35),
+        0 10px 20px rgba(90,45,31,0.06);
+      transform: translateY(-1px);
+    }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .pay-btn {
+      width: 100%;
+      border: none;
+      margin-top: 8px;
+      padding: 17px 20px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #6a3625, #8b5a3c);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+      box-shadow:
+        0 16px 28px rgba(90, 45, 31, 0.18),
+        inset 0 1px 0 rgba(255,255,255,0.14);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pay-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 34px rgba(90, 45, 31, 0.24);
+    }
+
+    .pay-btn:disabled {
+      cursor: not-allowed;
+    }
+
+    .trust-note {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--mocha);
+      opacity: 0.92;
+    }
+
+    .ring {
+      position: absolute;
+      border: 1px solid rgba(217, 160, 102, 0.25);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: pulseRing 4s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    .ring.r1 {
+      width: 160px;
+      height: 160px;
+      top: -40px;
+      right: -40px;
+    }
+
+    .ring.r2 {
+      width: 100px;
+      height: 100px;
+      bottom: 45px;
+      left: -30px;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes pulseRing {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.08); opacity: 0.16; }
+    }
+
+    .success-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.55), transparent 35%),
+        linear-gradient(180deg, rgba(255,255,255,0.44), rgba(255,248,242,0.72)),
+        rgba(255, 250, 246, 0.72);
+      backdrop-filter: blur(18px) saturate(130%);
+      -webkit-backdrop-filter: blur(18px) saturate(130%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.45s ease;
+      z-index: 20;
+      overflow: hidden;
+    }
+
+    .success-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .success-glow {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(217,160,102,0.28), transparent 65%);
+      filter: blur(10px);
+      animation: glowPulse 2.4s ease-in-out infinite;
+    }
+
+    .success-circle {
+      width: 94px;
+      height: 94px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f3d6ae, #d9a066, #8b5a3c);
+      border: 1px solid rgba(255,255,255,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 18px;
+      animation: popIn 0.55s ease;
+      box-shadow:
+        0 16px 28px rgba(90, 45, 31, 0.14),
+        inset 0 1px 0 rgba(255,255,255,0.25);
+      color: white;
+      position: relative;
+      z-index: 2;
+    }
+
+    .success-badge {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.45);
+      border: 1px solid rgba(255,255,255,0.36);
+      color: var(--chocolate);
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 2;
+    }
+
+    .success-overlay h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .success-overlay p {
+      color: var(--mocha);
+      max-width: 420px;
+      line-height: 1.8;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .success-mini-message {
+      font-size: 0.95rem;
+      color: var(--chocolate);
+      background: rgba(255,255,255,0.38);
+      border: 1px solid rgba(255,255,255,0.32);
+      padding: 12px 18px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .success-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .success-btn {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--chocolate), var(--mocha));
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 12px 24px rgba(90,45,31,0.14);
+      transition: transform 0.25s ease;
+    }
+
+    .success-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .success-btn.secondary {
+      background: rgba(255,255,255,0.5);
+      color: var(--chocolate);
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: none;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.7;
+      }
+      50% {
+        transform: scale(1.08);
+        opacity: 1;
+      }
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.6); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    @media (max-width: 980px) {
+      .payment-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .payment-info h1 {
+        font-size: 2.7rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .payment-info,
+      .payment-card {
+        padding: 24px;
+      }
+
+      .payment-info h1 {
+        font-size: 2.2rem;
+      }
+
+      .row-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .card-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .success-overlay h3 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+  <div class="bg-shape shape-3"></div>
+  <div class="bg-shape shape-4"></div>
+
+  <div class="sparkle s1"></div>
+  <div class="sparkle s2"></div>
+  <div class="sparkle s3"></div>
+  <div class="sparkle s4"></div>
+  <div class="sparkle s5"></div>
+
+  <section class="payment-section">
+    <div class="payment-wrapper">
+
+      <div class="payment-info">
+        <div class="logo-placeholder">
+          <img src="images/Logo Bekas.png" alt="Bekas Desserts Icon" class="logo-img-payment">
+        </div>
+
+        <div class="eyebrow">Bekas Desserts</div>
+        <h1>Finaliza tu pedido de forma dulce y segura.</h1>
+        <p>
+          Aquí podrás revisar todo lo que añadiste a tu orden y completar tus datos de pago.
+          Si tu pedido es muy personalizado, también puedes continuar la coordinación por WhatsApp.
+        </p>
+
+        <div class="mini-benefits">
+          <div class="mini-benefit">Pago seguro</div>
+          <div class="mini-benefit">Detalles personalizados</div>
+          <div class="mini-benefit">Atención boutique</div>
+        </div>
+      </div>
+
+      <div class="payment-card" id="paymentCard">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+
+        <div class="card-top">
+          <h2>Resumen y pago</h2>
+          <div class="secure-badge">Pago protegido</div>
+        </div>
+
+        <div class="checkout-box">
+          <div id="checkoutItems"></div>
+
+          <div class="order-row total">
+            <span>Total</span>
+            <span id="totalPrice">$0.00</span>
+          </div>
+        </div>
+
+        <form id="paymentForm">
+          <div class="form-group">
+            <label for="customerName">Nombre completo</label>
+            <input type="text" id="customerName" placeholder="Escribe tu nombre completo" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" placeholder="tuemail@ejemplo.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Número de teléfono</label>
+            <input type="tel" id="phone" placeholder="(000) 000-0000" required />
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Notas adicionales del pedido</label>
+            <textarea id="notes" rows="4" placeholder="Colores, inspiración, dedicatoria, detalles del evento u observaciones..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Nombre del titular</label>
+            <input type="text" id="name" placeholder="Nombre en la tarjeta" required />
+          </div>
+
+          <div class="form-group">
+            <label for="card">Número de tarjeta</label>
+            <input type="text" id="card" maxlength="19" placeholder="1234 5678 9012 3456" required />
+          </div>
+
+          <div class="row-2">
+            <div class="form-group">
+              <label for="expiry">Fecha de expiración</label>
+              <input type="text" id="expiry" maxlength="5" placeholder="MM/YY" required />
+            </div>
+
+            <div class="form-group">
+              <label for="cvv">CVV</label>
+              <input type="text" id="cvv" maxlength="4" placeholder="123" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="zip">Código postal</label>
+            <input type="text" id="zip" placeholder="00000" required />
+          </div>
+
+          <button type="submit" class="pay-btn" id="payBtn">Pagar $0.00</button>
+          <div class="trust-note">Tus datos de pago serán procesados de forma segura.</div>
+        </form>
+
+        <div class="success-overlay" id="successOverlay">
+          <div class="success-glow"></div>
+
+          <div class="success-circle">✓</div>
+
+          <div class="success-badge">Pedido confirmado</div>
+
+          <h3>¡Ya casi es hora de celebrar!</h3>
+
+          <p>
+            Gracias por elegir Bekas Desserts. Estamos preparando algo hermoso y dulce para ti.
+          </p>
+
+          <div class="success-mini-message">
+            Tu pedido fue recibido con éxito 💛
+          </div>
+
+          <div class="success-actions">
+            <a href="confirmation.html" class="success-btn">Ver confirmación</a>
+            <a href="index.html" class="success-btn secondary">Seguir comprando</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById("paymentForm");
+    const paymentCard = document.getElementById("paymentCard");
+    const successOverlay = document.getElementById("successOverlay");
+    const cardInput = document.getElementById("card");
+    const expiryInput = document.getElementById("expiry");
+    const cvvInput = document.getElementById("cvv");
+    const checkoutItems = document.getElementById("checkoutItems");
+    const totalPrice = document.getElementById("totalPrice");
+    const payBtn = document.getElementById("payBtn");
+
+    function money(value) {
+      return `$${value.toFixed(2)}`;
+    }
+
+    function obtenerOrden() {
+      try {
+        const data = localStorage.getItem("bekasOrder");
+        if (!data) return [];
+        const parsed = JSON.parse(data);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        console.error("Error leyendo la orden en payment:", error);
+        return [];
+      }
+    }
+
+function cargarOrden() {
+  const orden = obtenerOrden();
+
+  if (!orden.length) {
+    checkoutItems.innerHTML = `
+      <p class="empty-order">
+        No has añadido productos todavía. Regresa a la página principal para crear tu orden.
+      </p>
+    `;
+    totalPrice.textContent = "$0.00";
+    payBtn.textContent = "Pagar $0.00";
+    return 0;
+  }
+
+  let total = 0;
+
+  checkoutItems.innerHTML = orden.map(item => {
+    const precio = Number(item.precio) || 0;
+    total += precio;
+
+    const detalles = [
+      item.tamano ? `Tamaño: ${item.tamano}` : null,
+      item.relleno ? `Relleno: ${item.relleno}` : null,
+      item.rellenoExtra ? `${item.rellenoExtra}` : null,
+      item.extras && item.extras.length ? `Extras: ${item.extras.join(", ")}` : null,
+      item.notas ? `Notas: ${item.notas}` : null
+    ].filter(Boolean).join(" | ");
+
+    return `
+      <div class="order-row">
+        <div class="checkout-detail">
+          <strong>${item.producto || "Producto"}</strong>
+          <small>${detalles}</small>
+        </div>
+        <strong>${money(precio)}</strong>
+      </div>
+    `;
+  }).join("");
+
+  total = Number(total.toFixed(2));
+  totalPrice.textContent = money(total);
+  payBtn.textContent = `Pagar ${money(total)}`;
+  return total;
+}
+
+    cargarOrden();
+
+    cardInput.addEventListener("input", (e) => {
+      let value = e.target.value.replace(/\D/g, "").substring(0, 16);
+      value = value.replace(/(\d{4})(?=\d)/g, "$1 ");
+      e.target.value = value;
+      brilloSuave();
+    });
+
+    expiryInput.addEventListener("input", (e) => {
+      let value = e.target.value.replace(/\D/g, "").substring(0, 4);
+      if (value.length >= 3) value = value.substring(0, 2) + "/" + value.substring(2);
+      e.target.value = value;
+      brilloSuave();
+    });
+
+    cvvInput.addEventListener("input", (e) => {
+      e.target.value = e.target.value.replace(/\D/g, "").substring(0, 4);
+      brilloSuave();
+    });
+
+    document.querySelectorAll("input, textarea").forEach(field => {
+      field.addEventListener("input", brilloSuave);
+    });
+
+    window.addEventListener("pageshow", cargarOrden);
+window.addEventListener("focus", cargarOrden);
+
+    function brilloSuave() {
+      paymentCard.style.boxShadow = "0 20px 50px rgba(217, 160, 102, 0.22)";
+      paymentCard.style.transform = "translateY(-2px)";
+      setTimeout(() => {
+        paymentCard.style.boxShadow = "0 22px 48px rgba(90, 45, 31, 0.10)";
+        paymentCard.style.transform = "translateY(0)";
+      }, 260);
+    }
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const orden = obtenerOrden();
+      if (orden.length === 0) {
+        alert("Primero debes añadir productos a tu orden.");
+        return;
+      }
+
+      const requiredFields = [...form.querySelectorAll("input[required]")];
+      const allFilled = requiredFields.every(input => input.value.trim() !== "");
+
+      if (!allFilled) {
+        alert("Por favor completa todos los campos obligatorios.");
+        return;
+      }
+
+      payBtn.textContent = "Confirmando tu pedido...";
+      payBtn.disabled = true;
+      payBtn.style.opacity = "0.85";
+
+      lanzarParticulas(paymentCard);
+
+      setTimeout(() => {
+        successOverlay.classList.add("show");
+        localStorage.removeItem("bekasOrder");
+      }, 500);
+    });
+
+    function lanzarParticulas(container) {
+      const colors = ["#D9A066", "#F1C89B", "#8B5A3C", "#F6E0CF", "#EBCFAE", "#F3E7DC"];
+
+      for (let i = 0; i < 42; i++) {
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
+
+        const size = Math.random() * 12 + 6;
+        particle.style.width = size + "px";
+        particle.style.height = size + "px";
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.left = "50%";
+        particle.style.top = "52%";
+        particle.style.opacity = "1";
+
+        if (Math.random() > 0.5) {
+          particle.style.borderRadius = "50%";
+        } else {
+          particle.style.borderRadius = "4px";
+          particle.style.transform = "rotate(45deg)";
+        }
+
+        container.appendChild(particle);
+
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * 220 + 80;
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+
+        particle.animate(
+          [
+            { transform: "translate(-50%, -50%) scale(1)", opacity: 1 },
+            { transform: `translate(${x}px, ${y}px) scale(0.2)`, opacity: 0 }
+          ],
+          {
+            duration: 1300 + Math.random() * 500,
+            easing: "cubic-bezier(0.2, 0.8, 0.2, 1)"
+          }
+        );
+
+        setTimeout(() => particle.remove(), 1800);
+      }
+    }
+  </script>
+</body>
+</html>

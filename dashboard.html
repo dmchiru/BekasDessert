@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bekas Desserts | Mi Cuenta</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --chocolate:#5A2D1F;
+      --caramel:#D9A066;
+      --cream:#F3ECE7;
+      --mocha:#8B5A3C;
+      --white:#fffdfb;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Poppins',sans-serif;
+      background:var(--cream);
+      color:var(--chocolate);
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .container{
+      width:min(1200px,92%);
+      margin:auto;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(243,236,231,.9);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(90,45,31,.08);
+    }
+
+    .navbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 0;
+    }
+
+    .logo-box{
+      width:220px;
+      height:80px;
+      display:flex;
+      align-items:center;
+    }
+
+    .logo-img{
+      max-width:100%;
+      max-height:70px;
+      object-fit:contain;
+    }
+
+    .nav-links{
+      display:flex;
+      gap:28px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .nav-links a:hover{
+      color:var(--caramel);
+    }
+
+    .nav-btn{
+      padding:14px 24px;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--chocolate),var(--mocha));
+      color:white;
+      font-weight:600;
+    }
+
+    .hero{
+      text-align:center;
+      padding:80px 0 40px;
+    }
+
+    .eyebrow{
+      text-transform:uppercase;
+      letter-spacing:2px;
+      color:var(--caramel);
+      font-size:.8rem;
+      font-weight:600;
+      margin-bottom:14px;
+    }
+
+    h1{
+      font-family:'Cormorant Garamond',serif;
+      font-size:4rem;
+      margin-bottom:16px;
+    }
+
+    .hero p{
+      max-width:720px;
+      margin:auto;
+      line-height:1.8;
+      color:var(--mocha);
+    }
+
+    .dashboard-grid{
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:28px;
+      padding:30px 0 80px;
+    }
+
+    .sidebar,
+    .content-card{
+      background:rgba(255,253,251,.95);
+      border-radius:30px;
+      padding:30px;
+      box-shadow:0 18px 40px rgba(90,45,31,.08);
+      border:1px solid rgba(90,45,31,.08);
+    }
+
+    .profile-circle{
+      width:100px;
+      height:100px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--caramel),var(--mocha));
+      margin:0 auto 18px;
+    }
+
+    .sidebar h2{
+      text-align:center;
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.2rem;
+      margin-bottom:10px;
+    }
+
+    .sidebar p{
+      text-align:center;
+      color:var(--mocha);
+      margin-bottom:24px;
+    }
+
+    .menu-links{
+      display:grid;
+      gap:14px;
+    }
+
+    .menu-links a{
+      padding:14px 18px;
+      border-radius:18px;
+      background:rgba(243,236,231,.8);
+      transition:.25s ease;
+    }
+
+    .menu-links a:hover{
+      background:rgba(217,160,102,.18);
+    }
+
+    .content-card h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.6rem;
+      margin-bottom:18px;
+    }
+
+    .order-box{
+      padding:22px;
+      border-radius:22px;
+      background:rgba(243,236,231,.75);
+      margin-bottom:18px;
+    }
+
+    .order-box strong{
+      display:block;
+      margin-bottom:8px;
+      color:var(--chocolate);
+    }
+
+    .order-box p{
+      color:var(--mocha);
+      line-height:1.8;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:14px 24px;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--chocolate),var(--mocha));
+      color:white;
+      font-weight:600;
+      margin-top:12px;
+    }
+
+    footer{
+      background:var(--chocolate);
+      color:var(--cream);
+      text-align:center;
+      padding:40px 0 20px;
+      margin-top:40px;
+    }
+
+    @media(max-width:900px){
+      .dashboard-grid{
+        grid-template-columns:1fr;
+      }
+
+      h1{
+        font-size:2.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container navbar">
+    <div class="logo-box">
+      <img src="images/Logo name.png" alt="Bekas Desserts" class="logo-img">
+    </div>
+
+    <nav class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="about.html">Nosotros</a>
+      <a href="gallery.html">Galería</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contacto</a>
+      <a href="payment.html" class="nav-btn">Ver Orden</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">Mi cuenta</div>
+    <h1>Tu perfil y pedidos</h1>
+    <p>
+      Revisa tus pedidos recientes, diseños personalizados y guarda tus preferencias
+      para futuras órdenes.
+    </p>
+  </div>
+</section>
+
+<section class="container dashboard-grid">
+
+  <div class="sidebar">
+    <div class="profile-circle"></div>
+    <h2>Bienvenida</h2>
+    <p>Cliente Bekas Desserts</p>
+
+    <div class="menu-links">
+      <a href="dashboard.html">Mis pedidos</a>
+      <a href="settings.html">Configuración</a>
+      <a href="gallery.html">Pedidos especiales</a>
+      <a href="payment.html">Mi carrito</a>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h2>Pedidos recientes</h2>
+
+    <div class="order-box">
+      <strong>Pedido #1025</strong>
+      <p>Pastel de vainilla 8" con relleno de fresa • $45.00</p>
+    </div>
+
+    <div class="order-box">
+      <strong>Pedido personalizado</strong>
+      <p>Pastel temático para cumpleaños • En proceso de cotización</p>
+    </div>
+
+    <div class="order-box">
+      <strong>Galletas decoradas</strong>
+      <p>Pedido desde $20 • Coordinado por WhatsApp</p>
+    </div>
+
+    <a href="gallery.html" class="btn">Ver más diseños</a>
+  </div>
+
+</section>
+
+<footer>
+  © 2026 Bekas Desserts. Todos los derechos reservados.
+</footer>
+
+</body>
+</html>
